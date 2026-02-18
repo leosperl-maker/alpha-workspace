@@ -1,0 +1,17 @@
+# Secrets
+.env
+.env.*
+*.key
+*.secret
+credentials.md
+config-n8n-credentials.txt
+
+# Node modules
+node_modules/
+
+# Logs
+alpha/logs/
+*.log
+
+# OS
+.DS_Store
