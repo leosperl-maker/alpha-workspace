@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Slide Actu - Antilla Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1080px;
+            height: 1080px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: white;
+            position: relative;
+        }
+        
+        .header {
+            background: rgba(52, 168, 83, 0.95);
+            padding: 35px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .date {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .category {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 22px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 60px;
+            text-align: center;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.4), transparent);
+        }
+        
+        .titre {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.7);
+            letter-spacing: -0.5px;
+        }
+        
+        .sous-titre {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.95;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        }
+        
+        .footer {
+            padding: 25px;
+            text-align: center;
+            font-size: 18px;
+            opacity: 0.8;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="date">JJ/MM/AAAA</div>
+        <div class="category">CATÉGORIE</div>
+    </div>
+    
+    <div class="content">
+        <div class="titre">TITRE DE L'ARTICLE</div>
+        <div class="sous-titre">Sous-titre explicatif en deux phrases maximum</div>
+    </div>
+    
+    <div class="footer">ANTILLA MARTINIQUE • L'ACTUALITÉ CARAÏBE</div>
+</body>
+</html>

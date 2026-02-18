@@ -1,0 +1,317 @@
+{
+  "name": "Alpha Agency - Auto Blog 3x/jour",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "0",
+              "hours": 8
+            }
+          ]
+        }
+      },
+      "id": "cron-matin",
+      "name": "Déclencheur 8h",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1.1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "0",
+              "hours": 14
+            }
+          ]
+        }
+      },
+      "id": "cron-midi",
+      "name": "Déclencheur 14h",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1.1,
+      "position": [250, 450]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "0",
+              "hours": 20
+            }
+          ]
+        }
+      },
+      "id": "cron-soir",
+      "name": "Déclencheur 20h",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1.1,
+      "position": [250, 600]
+    },
+    {
+      "parameters": {
+        "prompt": "=Topic choix aléatoire : marketing, IA, ou réseaux sociaux"
+      },
+      "id": "topic-selector",
+      "name": "Sélecteur Sujet",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": "={\n  \"model\": \"sonar-pro\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Tu es spécialiste en veille actualités. Retourne les 3 dernières actualités récentes et importantes avec sources.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Quelles sont les actualités les plus importantes aujourd'hui en {{$json.topic}} ? Donne les titres, résumés et sources URLs.\"\n    }\n  ],\n  \"max_tokens\": 1000,\n  \"temperature\": 0.2\n}"
+      },
+      "id": "perplexity-api",
+      "name": "Perplexity API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "=Analyse ces actualités {{$json.choices[0].message.content}} et choisis LE sujet le plus pertinent et frais pour un article de blog. Retourne: titre accrocheur, angle unique, mots-clés SEO principaux."
+      },
+      "id": "ia-content-selector",
+      "name": "IA - Sélection Sujet",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "=Rédige un article de blog professionnel de 1500-2500 caractères sur : {{$json.article_topic}}. Structure: intro accrocheuse, développement avec sources citées, conclusion. Style: professionnel mais accessible. Inclus backlink vers sources originales."
+      },
+      "id": "ia-redacteur",
+      "name": "IA - Rédaction Article",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "=Analyse cet article {{$json.choices[0].message.content}} et détermine où placer 1-2 images pertinentes. Retourne: description image 1, description image 2 (ou null si pas nécessaire)"
+      },
+      "id": "ia-image-analyzer",
+      "name": "IA - Analyse Images",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [1050, 500]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "={{$json.search_image_1 ? 'https://api.unsplash.com/search/photos?query=' + encodeURIComponent($json.search_image_1) + '&per_page=3&client_id=YOUR_UNSPLASH_KEY' : ''}}"
+      },
+      "id": "unsplash-search-1",
+      "name": "Unsplash - Image 1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 450]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.leonardo.ai/v1/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": "={\n  \"prompt\": \"{{$json.image_prompt_1 || $json.image_prompt_2}}\",\n  \"modelId\": \"6bef9f1b-29cb-40c8-b5eb-7cd38267ce6d\",\n  \"width\": 1024,\n  \"height\": 576,\n  \"num_images\": 1,\n  \"photoReal\": true\n}"
+      },
+      "id": "leonardo-generate",
+      "name": "Leonardo - Génération",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 650]
+    },
+    {
+      "parameters": {
+        "prompt": "=Génère titre SEO (60 car max) et méta description SEO (155 car max) pour cet article: {{$json.article_content}}. Inclus mots-clés principaux."
+      },
+      "id": "ia-seo-optimizer",
+      "name": "IA - SEO Optimisation",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 2,
+      "position": [1450, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://alphagency.fr/api/blog/create",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "={\n  \"title\": \"{{$json.article_title}}\",\n  \"content\": \"{{$json.article_content}}\",\n  \"seo_title\": \"{{$json.seo_title}}\",\n  \"seo_description\": \"{{$json.seo_description}}\",\n  \"featured_image\": \"{{$json.final_image_url}}\",\n  \"status\": \"publish\",\n  \"blocks_format\": true,\n  \"category\": \"{{$json.category}}\",\n  \"tags\": {{$json.keywords_array}}\n}"
+      },
+      "id": "dashboard-api",
+      "name": "API Dashboard Alpha",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1650, 300]
+    },
+    {
+      "parameters": {
+        "subject": "Nouvel article publié - {{$json.article_title}}",
+        "text": "Article publié avec succès:\n- Titre: {{$json.article_title}}\n- Catégorie: {{$json.category}}\n- URL: {{$json.article_url}}\n- Mots-clés: {{$json.keywords}}",
+        "toEmail": "leo@alphagency.fr"
+      },
+      "id": "email-notification",
+      "name": "Email Confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1850, 300]
+    }
+  ],
+  "connections": {
+    "Déclencheur 8h": {
+      "main": [
+        [
+          {
+            "node": "Sélecteur Sujet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Déclencheur 14h": {
+      "main": [
+        [
+          {
+            "node": "Sélecteur Sujet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Déclencheur 20h": {
+      "main": [
+        [
+          {
+            "node": "Sélecteur Sujet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sélecteur Sujet": {
+      "main": [
+        [
+          {
+            "node": "Perplexity API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity API": {
+      "main": [
+        [
+          {
+            "node": "IA - Sélection Sujet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IA - Sélection Sujet": {
+      "main": [
+        [
+          {
+            "node": "IA - Rédaction Article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IA - Rédaction Article": {
+      "main": [
+        [
+          {
+            "node": "IA - SEO Optimisation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "IA - Analyse Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IA - Analyse Images": {
+      "main": [
+        [
+          {
+            "node": "Unsplash - Image 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Leonardo - Génération",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IA - SEO Optimisation": {
+      "main": [
+        [
+          {
+            "node": "API Dashboard Alpha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API Dashboard Alpha": {
+      "main": [
+        [
+          {
+            "node": "Email Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0.0",
+  "id": "alpha-blog-automation"
+}

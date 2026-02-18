@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Actualité Martinique</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1080px;
+            height: 1080px;
+            background: linear-gradient(135deg, #0066cc 0%, #00a8cc 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial Black', Arial, sans-serif;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .date-badge {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .category {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #ff6b35;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .content {
+            text-align: center;
+            padding: 0 60px;
+            z-index: 10;
+        }
+        
+        .titre {
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .sous-titre {
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+        
+        .logo {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            opacity: 0.7;
+        }
+        
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(255,255,255,0.3) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="date-badge">LUNDI 10 FÉVRIER</div>
+    <div class="category">POLITIQUE</div>
+    
+    <div class="content">
+        <div class="titre">Nouvelle réforme des retraites en discussion</div>
+        <div class="sous-titre">Le gouvernement annonce des changements majeurs pour les fonctionnaires martiniquais</div>
+    </div>
+    
+    <div class="logo">ACTUALITÉ MARTINIQUE</div>
+</body>
+</html>

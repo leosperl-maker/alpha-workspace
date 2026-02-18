@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 1 - Antilla Hebdo Cover</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1080px;
+            height: 1080px;
+            background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.25)), 
+                        url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&q=80');
+            background-size: cover;
+            background-position: center center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: white;
+            padding: 80px 60px;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .periode {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .actu-nombre {
+            font-size: 28px;
+            font-weight: 400;
+            opacity: 0.9;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .swipe-text {
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .antilla-logo {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            opacity: 0.95;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="antilla-logo">ANTILLA</div>
+    
+    <div class="header">
+        <div class="periode">Les 7 actus du 03/02 au 09/02</div>
+        <div class="actu-nombre">Les actualités de la semaine</div>
+    </div>
+    
+    <div class="footer">
+        <div class="swipe-text">Swipe pour plus d'infos</div>
+    </div>
+</body>
+</html>
