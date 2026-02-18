@@ -7,7 +7,12 @@
 ---
 
 ## Agents subordonnés
-(À compléter au fil des créations)
+
+### Yann — Agent d'exécution
+- **Dossier** : `agents/yann/`
+- **Statut** : ✅ Actif
+- **Spécialité** : (À définir avec Léo)
+- **Rapporte à** : Alpha
 
 ---
 
