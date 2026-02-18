@@ -8,8 +8,8 @@
 
 ## Agents subordonnés
 
-### Yann — Agent d'exécution
-- **Dossier** : `agents/yann/`
+### Melting Pot — Agent d'exécution
+- **Dossier** : `agents/melting-pot/`
 - **Statut** : ✅ Actif
 - **Spécialité** : (À définir avec Léo)
 - **Rapporte à** : Alpha
